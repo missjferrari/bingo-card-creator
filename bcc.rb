@@ -1,3 +1,5 @@
+require 'prawn'
+
 def align(num)
     if num < 10
         " #{num}"
@@ -29,3 +31,52 @@ bingo_card = <<-BINGO
 BINGO
 
 puts bingo_card
+
+header = ["B", "I", "N", "G", "O"]
+n_col.insert(2, "F")
+
+Prawn::Document.generate("bingo.pdf") do
+    define_grid(columns: 5, rows: 6)
+
+    header.each_with_index do |char, i|
+        grid(0, i).bounding_box do
+            stroke_bounds
+            text char, align: :center, valign: :center, size: 50, style: :bold
+        end
+    end
+
+    b_col.each_with_index do |num, i|
+        grid((i + 1), 0).bounding_box do
+            stroke_bounds
+            text num.to_s, align: :center, valign: :center, size: 50
+        end
+    end
+
+    i_col.each_with_index do |num, i|
+        grid((i + 1), 1).bounding_box do
+            stroke_bounds
+            text num.to_s, align: :center, valign: :center, size: 50
+        end
+    end
+
+    n_col.each_with_index do |num, i|
+        grid((i + 1), 2).bounding_box do
+            stroke_bounds
+            text num.to_s, align: :center, valign: :center, size: 50
+        end
+    end
+
+    g_col.each_with_index do |num, i|
+        grid((i + 1), 3).bounding_box do
+            stroke_bounds
+            text num.to_s, align: :center, valign: :center, size: 50
+        end
+    end
+
+    o_col.each_with_index do |num, i|
+        grid((i + 1), 4).bounding_box do
+            stroke_bounds
+            text num.to_s, align: :center, valign: :center, size: 50
+        end
+    end
+end
